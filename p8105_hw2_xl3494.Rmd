@@ -1,0 +1,65 @@
+---
+title: "p8105_hw2_xl3494"
+output: github_document
+---
+```{r setup}
+library(tidyverse)
+library(lubridate)
+```
+
+# Problem 1
+
+Clean the data in pols-month.csv:
+
+```{r}
+pols_month =
+  read_csv("./fivethirtyeight_datasets/pols-month.csv")|>
+  separate(mon, into = c("year", "nmonth", "day"), sep = "-", convert = TRUE) |>
+  mutate(
+    month = factor(tolower(month.name[nmonth]),
+                   levels = tolower(month.name),
+                   ordered = TRUE)) |>
+  mutate(president = if_else(prez_gop == 1, "gop", "dem")) |>
+  arrange(year, month) |>
+  select(year, month, everything(), -nmonth, -day, -prez_gop, -prez_dem)
+```
+
+Clean the data in snp.csv:
+
+```{r}
+snp =
+  read_csv("./fivethirtyeight_datasets/snp.csv")|>
+  mutate(date = mdy(date)) |>
+  mutate(year  = year(date), nmonth = month(date)) |>
+  mutate(month = factor(tolower(month.name[nmonth]),
+                        levels = tolower(month.name), ordered = TRUE))|>
+  arrange(year, month) |>
+  select(year, month, close)
+```
+
+Tidy the unemployment data:
+
+```{r}
+unemployment =
+  read_csv("./fivethirtyeight_datasets/unemployment.csv")|>
+  janitor::clean_names() |>
+  pivot_longer(
+    cols = -year,
+    names_to  = "ab_month",
+    values_to = "unemployment") |>
+  mutate(
+    m_idx = match(ab_month, tolower(month.abb)),             
+    month = factor(tolower(month.name[m_idx]),
+                   levels = tolower(month.name), ordered = TRUE)) |>
+  arrange(year, month) |>
+  select(year, month, unemployment)
+```
+
+
+
+
+
+
+
+
+
