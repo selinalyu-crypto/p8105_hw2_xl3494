@@ -2,6 +2,7 @@
 title: "p8105_hw2_xl3494"
 output: github_document
 ---
+
 ```{r setup}
 library(tidyverse)
 library(lubridate)
@@ -142,6 +143,66 @@ The combined Trash Wheel dataset contains `r nrow(wheel_bind)` observations and 
 Professor Trash Wheel collected a total of `r format(sum(wheel_bind$weight_tons[wheel_bind$wheel=="professor"], na.rm=TRUE))` tons of trash. 
 
 In June 2022, Gwynnda collected `r format(sum(wheel_bind$cigarette_butts[wheel_bind$wheel=="gwynns" & wheel_bind$year==2022 & tolower(wheel_bind$month)=="june"], na.rm=TRUE), big.mark="," )` cigarette butts.
+
+# Problem 3
+
+read in and clean zillow_data
+
+```{r}
+zori_data = 
+  read_csv("./zillow_data/Zip_zori_uc_sfrcondomfr_sm_month_NYC.csv") |>
+  janitor::clean_names() |>
+  select (
+    region_id,
+    county = county_name,
+    zip_code = region_name,
+    everything()) |>
+  select (-region_type, -state_name, -state, -city, -metro)|>
+  pivot_longer(cols = matches("^x"),
+               names_to = "date_raw",
+               values_to = "zori") |>
+  mutate(
+    date = date_raw |>
+      str_remove("^x") |>
+      str_replace_all("_", "-") |>
+      as.Date()) |>
+  mutate(
+    county = county |>
+      str_remove(regex("\\s*county\\b", ignore_case = TRUE)) |>
+      str_squish()) |>
+  select(region_id, county, zip_code, size_rank, date, zori)
+```
+
+Read in and tidy zip_code_data
+
+```{r}
+zip_code_data = 
+  read_csv("./zillow_data/Zip Codes.csv") |>
+  janitor::clean_names() |>
+  select(county, zip_code, neighborhood, county_fips)
+```
+
+Join two datasets
+
+```{r}
+zori_final = 
+   left_join(zori_data, zip_code_data,
+             by = c("zip_code","county"), 
+             relationship = "many-to-many") |>
+  filter(!is.na(zori)) |>
+  pivot_wider(
+    names_from = "date",
+    values_from = "zori") |>
+  arrange(zip_code, neighborhood)
+
+zori_final
+```
+
+
+
+
+
+
 
 
 

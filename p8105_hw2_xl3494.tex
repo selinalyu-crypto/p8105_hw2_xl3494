@@ -1,0 +1,452 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={p8105\_hw2\_xl3494},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{p8105\_hw2\_xl3494}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+## v dplyr     1.1.4     v readr     2.1.5
+## v forcats   1.0.0     v stringr   1.5.1
+## v ggplot2   3.5.2     v tibble    3.3.0
+## v lubridate 1.9.4     v tidyr     1.3.1
+## v purrr     1.1.0     
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+## i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(lubridate)}
+\FunctionTok{library}\NormalTok{(readxl)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Problem 1}\label{problem-1}
+
+Clean the data in pols-month.csv:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pols\_month }\OtherTok{=}
+  \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"./fivethirtyeight\_datasets/pols{-}month.csv"}\NormalTok{)}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{separate}\NormalTok{(mon, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"year"}\NormalTok{, }\StringTok{"nmonth"}\NormalTok{, }\StringTok{"day"}\NormalTok{), }\AttributeTok{sep =} \StringTok{"{-}"}\NormalTok{, }\AttributeTok{convert =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{month =} \FunctionTok{factor}\NormalTok{(}\FunctionTok{tolower}\NormalTok{(month.name[nmonth]),}
+                   \AttributeTok{levels =} \FunctionTok{tolower}\NormalTok{(month.name),}
+                   \AttributeTok{ordered =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{president =} \FunctionTok{if\_else}\NormalTok{(prez\_gop }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, }\StringTok{"gop"}\NormalTok{, }\StringTok{"dem"}\NormalTok{)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{arrange}\NormalTok{(year, month) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(year, month, }\FunctionTok{everything}\NormalTok{(), }\SpecialCharTok{{-}}\NormalTok{nmonth, }\SpecialCharTok{{-}}\NormalTok{day, }\SpecialCharTok{{-}}\NormalTok{prez\_gop, }\SpecialCharTok{{-}}\NormalTok{prez\_dem)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 822 Columns: 9
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## dbl  (8): prez_gop, gov_gop, sen_gop, rep_gop, prez_dem, gov_dem, sen_dem, r...
+## date (1): mon
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+Clean the data in snp.csv:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{snp }\OtherTok{=}
+  \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"./fivethirtyeight\_datasets/snp.csv"}\NormalTok{)}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{separate}\NormalTok{(date, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"m"}\NormalTok{, }\StringTok{"d"}\NormalTok{, }\StringTok{"yy"}\NormalTok{), }\AttributeTok{sep =} \StringTok{"/"}\NormalTok{, }\AttributeTok{convert =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{year  =} \FunctionTok{if\_else}\NormalTok{(yy }\SpecialCharTok{\textgreater{}=} \DecValTok{50}\NormalTok{, }\DecValTok{1900}\DataTypeTok{L} \SpecialCharTok{+}\NormalTok{ yy, }\DecValTok{2000}\DataTypeTok{L} \SpecialCharTok{+}\NormalTok{ yy),   }\CommentTok{\# 50–99 → 1950–1999；00–49 → 2000–2049}
+    \AttributeTok{month =} \FunctionTok{factor}\NormalTok{(}\FunctionTok{tolower}\NormalTok{(month.name[m]),}
+                   \AttributeTok{levels =} \FunctionTok{tolower}\NormalTok{(month.name), }\AttributeTok{ordered =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{arrange}\NormalTok{(year, month) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(year, month, close)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 787 Columns: 2
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr (1): date
+## dbl (1): close
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+Tidy the unemployment data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{unemployment }\OtherTok{=}
+  \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"./fivethirtyeight\_datasets/unemployment.csv"}\NormalTok{)}\SpecialCharTok{|\textgreater{}}
+\NormalTok{  janitor}\SpecialCharTok{::}\FunctionTok{clean\_names}\NormalTok{() }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{pivot\_longer}\NormalTok{(}
+    \AttributeTok{cols =} \SpecialCharTok{{-}}\NormalTok{year,}
+    \AttributeTok{names\_to  =} \StringTok{"ab\_month"}\NormalTok{,}
+    \AttributeTok{values\_to =} \StringTok{"unemployment"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{m\_idx =} \FunctionTok{match}\NormalTok{(ab\_month, }\FunctionTok{tolower}\NormalTok{(month.abb)),             }
+    \AttributeTok{month =} \FunctionTok{factor}\NormalTok{(}\FunctionTok{tolower}\NormalTok{(month.name[m\_idx]),}
+                   \AttributeTok{levels =} \FunctionTok{tolower}\NormalTok{(month.name), }\AttributeTok{ordered =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{arrange}\NormalTok{(year, month) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(year, month, unemployment)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 68 Columns: 13
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## dbl (13): Year, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+Joining snp into pols\_month:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pols\_snp }\OtherTok{\textless{}{-}}\NormalTok{ pols\_month }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{left\_join}\NormalTok{(snp }\SpecialCharTok{|\textgreater{}} \FunctionTok{rename}\NormalTok{(}\AttributeTok{snp\_close =}\NormalTok{ close),}
+            \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"year"}\NormalTok{,}\StringTok{"month"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Joining unemployment into result:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pols\_snp\_unemp }\OtherTok{\textless{}{-}}\NormalTok{ pols\_snp }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{left\_join}\NormalTok{(unemployment, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"year"}\NormalTok{,}\StringTok{"month"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{About the datasets}\label{about-the-datasets}
+
+The pols-month table contains the monthly counts of politicians by party
+-- Republican/Democratic governors, senators, and representatives, and
+the party of the sitting president. After cleaning, the time range is
+from Jan 1947 to Jun 2015 (822 rows).
+
+The snp table holds the Standard \& Poor's stock market index (close) by
+year and month. After cleaning, it contains 787 rows with a time range
+from Jan 1950 to Jul 2015.
+
+The unemployment table records the monthly unemployment rate (\%); we
+pivoted it from wide (Jan--Dec columns) to long with the same keys --
+year and month. The dataset contains 816 rows with a time range from Jan
+1948 to Jun 2015.
+
+The joined dataset pols\_snp\_unemp contains 822 rows and 11 variables.
+Key variables include year, month, president, party counts (gov\_gop,
+sen\_gop, rep\_gop, gov\_dem, sen\_dem, and rep\_dem), stock market
+index (snp\_close), and \% unemployment. The final table keeps all the
+pol-month months from Jan 1947 to Jun 2015. The coverage of the other
+two dataset differs slightly: snp\_close covers from Jan 1950 to Jun
+2015, and unemployment covers from Jan 1948 to Jun 2015.
+
+\section{Problem 2}\label{problem-2}
+
+Read in and clean the Mr.~Trash Wheel sheet:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mr }\OtherTok{=} 
+  \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"./trashwheel\_data/202509 Trash Wheel Collection Data.xlsx"}\NormalTok{,}
+                           \AttributeTok{sheet =} \StringTok{"Mr. Trash Wheel"}\NormalTok{,}
+                           \AttributeTok{range =} \StringTok{"A2:N709"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+\NormalTok{  janitor}\SpecialCharTok{::}\FunctionTok{clean\_names}\NormalTok{()}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(dumpster)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{month =} \FunctionTok{tolower}\NormalTok{(month),}
+         \AttributeTok{year  =} \FunctionTok{as.integer}\NormalTok{(readr}\SpecialCharTok{::}\FunctionTok{parse\_number}\NormalTok{(year)),}
+         \AttributeTok{date  =} \FunctionTok{as.Date}\NormalTok{(date),}
+         \AttributeTok{sports\_balls =} \FunctionTok{as.integer}\NormalTok{(}\FunctionTok{round}\NormalTok{(sports\_balls)),}
+         \AttributeTok{wheel =} \StringTok{"mr"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Read in and clean the Professor Trash Wheel sheet:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{professor }\OtherTok{=} 
+  \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"./trashwheel\_data/202509 Trash Wheel Collection Data.xlsx"}\NormalTok{,}
+                           \AttributeTok{sheet =} \StringTok{"Professor Trash Wheel"}\NormalTok{,}
+                           \AttributeTok{range =} \StringTok{"A2:M134"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+\NormalTok{  janitor}\SpecialCharTok{::}\FunctionTok{clean\_names}\NormalTok{()}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(dumpster)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{month =} \FunctionTok{tolower}\NormalTok{(month),}
+         \AttributeTok{date  =} \FunctionTok{as.Date}\NormalTok{(date),}
+         \AttributeTok{wheel =} \StringTok{"professor"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Read in and clean the Gwynns Falls Trash Wheel sheet:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gwynns }\OtherTok{=} 
+  \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"./trashwheel\_data/202509 Trash Wheel Collection Data.xlsx"}\NormalTok{,}
+                           \AttributeTok{sheet =} \StringTok{"Gwynns Falls Trash Wheel"}\NormalTok{,}
+                           \AttributeTok{range =} \StringTok{"A2:L351"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+\NormalTok{  janitor}\SpecialCharTok{::}\FunctionTok{clean\_names}\NormalTok{()}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(dumpster)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{month =} \FunctionTok{tolower}\NormalTok{(month),}
+         \AttributeTok{date  =} \FunctionTok{as.Date}\NormalTok{(date),}
+         \AttributeTok{wheel =} \StringTok{"gwynns"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Bind all rows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wheel\_bind }\OtherTok{=} 
+  \FunctionTok{bind\_rows}\NormalTok{(mr, professor, gwynns) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(wheel, dumpster, month, year, date, }\FunctionTok{everything}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{About the dataset}\label{about-the-dataset}
+
+The combined Trash Wheel dataset contains 1188 observations and 15
+variables spanning 2014--2025. Each row contains a dumpster with
+identifiers \texttt{dumpster} and \texttt{wheel} (Mr., Professor,
+Gwynnda), timestamp \texttt{date} (plus \texttt{year}, \texttt{month}),
+and material metrics such as \texttt{weight\_tons},
+\texttt{volume\_cubic\_yards}, \texttt{plastic\_bottles},
+\texttt{polystyrene}, \texttt{cigarette\_butts}, \texttt{wrappers},
+\texttt{sports\_balls} (rounded to integers), and
+\texttt{homes\_powered}.
+
+Professor Trash Wheel collected a total of 282.26 tons of trash.
+
+In June 2022, Gwynnda collected 18,120 cigarette butts.
+
+\section{Problem 3}\label{problem-3}
+
+read in and clean zillow\_data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{zori\_data }\OtherTok{=} 
+  \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"./zillow\_data/Zip\_zori\_uc\_sfrcondomfr\_sm\_month\_NYC.csv"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+\NormalTok{  janitor}\SpecialCharTok{::}\FunctionTok{clean\_names}\NormalTok{() }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{ (}
+\NormalTok{    region\_id,}
+    \AttributeTok{county =}\NormalTok{ county\_name,}
+    \AttributeTok{zip\_code =}\NormalTok{ region\_name,}
+    \FunctionTok{everything}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{ (}\SpecialCharTok{{-}}\NormalTok{region\_type, }\SpecialCharTok{{-}}\NormalTok{state\_name, }\SpecialCharTok{{-}}\NormalTok{state, }\SpecialCharTok{{-}}\NormalTok{city, }\SpecialCharTok{{-}}\NormalTok{metro)}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \FunctionTok{matches}\NormalTok{(}\StringTok{"\^{}x"}\NormalTok{),}
+               \AttributeTok{names\_to =} \StringTok{"date\_raw"}\NormalTok{,}
+               \AttributeTok{values\_to =} \StringTok{"zori"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{date =}\NormalTok{ date\_raw }\SpecialCharTok{|\textgreater{}}
+      \FunctionTok{str\_remove}\NormalTok{(}\StringTok{"\^{}x"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+      \FunctionTok{str\_replace\_all}\NormalTok{(}\StringTok{"\_"}\NormalTok{, }\StringTok{"{-}"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+      \FunctionTok{as.Date}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{county =}\NormalTok{ county }\SpecialCharTok{|\textgreater{}}
+      \FunctionTok{str\_remove}\NormalTok{(}\FunctionTok{regex}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{s*county}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{b"}\NormalTok{, }\AttributeTok{ignore\_case =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{|\textgreater{}}
+      \FunctionTok{str\_squish}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(region\_id, county, zip\_code, size\_rank, date, zori)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 149 Columns: 125
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr   (6): RegionType, StateName, State, City, Metro, CountyName
+## dbl (119): RegionID, SizeRank, RegionName, 2015-01-31, 2015-02-28, 2015-03-3...
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+Read in and tidy zip\_code\_data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{zip\_code\_data }\OtherTok{=} 
+  \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"./zillow\_data/Zip Codes.csv"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+\NormalTok{  janitor}\SpecialCharTok{::}\FunctionTok{clean\_names}\NormalTok{() }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(county, zip\_code, neighborhood, county\_fips)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 322 Columns: 7
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr (4): County, County Code, File Date, Neighborhood
+## dbl (3): State FIPS, County FIPS, ZipCode
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+Join two datasets
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{zori\_final }\OtherTok{=} 
+   \FunctionTok{left\_join}\NormalTok{(zip\_code\_data, zori\_data, }
+             \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"zip\_code"}\NormalTok{,}\StringTok{"county"}\NormalTok{), }
+             \AttributeTok{relationship =} \StringTok{"many{-}to{-}many"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(zori)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{pivot\_wider}\NormalTok{(}
+    \AttributeTok{names\_from =} \StringTok{"date"}\NormalTok{,}
+    \AttributeTok{values\_from =} \StringTok{"zori"}\NormalTok{)}
+
+\NormalTok{zori\_final}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 148 x 122
+##    county zip_code neighborhood     county_fips region_id size_rank `2023-01-31`
+##    <chr>     <dbl> <chr>                  <dbl>     <dbl>     <dbl>        <dbl>
+##  1 Bronx     10451 High Bridge and~       36005     61791       838        2711.
+##  2 Bronx     10452 High Bridge and~       36005     61792       112          NA 
+##  3 Bronx     10453 Central Bronx          36005     61793        84          NA 
+##  4 Bronx     10454 Hunts Point and~       36005     61794      2018        2624.
+##  5 Bronx     10455 Hunts Point and~       36005     61795      1733          NA 
+##  6 Bronx     10456 High Bridge and~       36005     61796        49          NA 
+##  7 Bronx     10457 Central Bronx          36005     61797       107        2152.
+##  8 Bronx     10458 Bronx Park and ~       36005     61798        63        1585.
+##  9 Bronx     10459 Hunts Point and~       36005     61799       914          NA 
+## 10 Bronx     10460 Central Bronx          36005     61800       462          NA 
+## # i 138 more rows
+## # i 115 more variables: `2023-02-28` <dbl>, `2023-03-31` <dbl>,
+## #   `2023-04-30` <dbl>, `2023-05-31` <dbl>, `2023-06-30` <dbl>,
+## #   `2023-07-31` <dbl>, `2023-08-31` <dbl>, `2023-09-30` <dbl>,
+## #   `2023-10-31` <dbl>, `2023-11-30` <dbl>, `2023-12-31` <dbl>,
+## #   `2024-01-31` <dbl>, `2024-02-29` <dbl>, `2024-03-31` <dbl>,
+## #   `2024-04-30` <dbl>, `2024-05-31` <dbl>, `2024-06-30` <dbl>, ...
+\end{verbatim}
+
+\end{document}
