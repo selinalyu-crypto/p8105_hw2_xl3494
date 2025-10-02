@@ -75,6 +75,8 @@ Joining unemployment into result:
 
 ```{r}
 pols_snp_unemp = left_join(result_df, unemployment, by = c("year","month"))
+
+pols_snp_unemp
 ```
 
 ### About the datasets
@@ -138,6 +140,8 @@ Bind all rows:
 wheel_bind = 
   bind_rows(mr, professor, gwynns) |>
   select(wheel, dumpster, month, year, date, everything())
+
+wheel_bind
 ```
 
 ### About the dataset
@@ -174,6 +178,8 @@ zori_data =
       str_remove(regex("\\s*county\\b", ignore_case = TRUE)) |>
       str_squish()) |>
   select(region_id, county, zip_code, size_rank, date, zori)
+
+zori_data
 ```
 
 Read in and tidy zip_code_data
@@ -182,7 +188,9 @@ Read in and tidy zip_code_data
 zip_code_data = 
   read_csv("./zillow_data/Zip Codes.csv") |>
   janitor::clean_names() |>
-  select(county, zip_code, neighborhood, county_fips)
+  select(county, zip_code, neighborhood)
+
+zip_code_data
 ```
 
 Join two datasets
@@ -192,7 +200,6 @@ zori_final =
    left_join(zori_data, zip_code_data,
              by = c("zip_code","county"), 
              relationship = "many-to-many") |>
-  filter(!is.na(zori)) |>
   pivot_wider(
     names_from = "date",
     values_from = "zori") |>
@@ -202,6 +209,31 @@ zori_final
 ```
 
 
+```{r}
+n_obs  <- nrow(zori_final)
+n_zip  <- dplyr::n_distinct(zori_final$zip_code)
+n_hood <- zori_final |> distinct(neighborhood) |> nrow()
+
+zip_missing <- setdiff(zip_code_data$zip_code, zori_data$zip_code)
+n_distinct(zip_missing)
+
+```
+
+The final tidy dataset contains `r n_obs` observations across `r n_zip`
+unique ZIP codes and `r n_hood` neighborhoods. There are `r n_distinct(zip_missing)` ZIP codes present in the ZIP lookup but not in the Zillow data. This is likely due to the area has no housing available. For example, area 10313 is located in Richmond County, and includes major attractions like Staten Island Mall and Historic Richmond Town. Zip code 10273 is a "Unique" ZIP code located in Manhattan primarily encompassing the James A. Farley Building. There is no housing available in these kinds of areas.
+
+```{r}
+drops <- zori_final |>
+  select(county, zip_code, neighborhood, `2020-01-31`, `2021-01-31`)|>
+  filter(!is.na(`2020-01-31`), !is.na(`2021-01-31`)) |>
+  mutate(change  = `2021-01-31` - `2020-01-31`) |>  # negative = drop
+  arrange(change) |>
+  slice_head(n = 10)
+
+drops
+```
+
+The table shows the 10 zip codes (along with county and neighborhood) with the largest drop in price from Jan 2020 to 2021. All 10 are in Manhattan (New York County), concentrated in Lower Manhattan. This pattern is consistent with pandemic-time shifts: remote work and online schooling reduced the need to live close to jobs and campuses, and many renters left high-cost, dense neighborhoods. With less demand for rental apartments, rents fell faster in these areas than in the outer boroughs.
 
 
 
